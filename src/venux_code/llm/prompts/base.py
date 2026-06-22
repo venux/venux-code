@@ -207,9 +207,6 @@ class PromptBuilder:
         """Assemble all sections into the final prompt string."""
         parts: list[str] = []
 
-        for title, content in self._raw_parts:
-            pass  # raw_parts don't have titles
-
         for raw in self._raw_parts:
             parts.append(raw)
 

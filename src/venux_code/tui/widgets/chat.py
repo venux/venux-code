@@ -70,8 +70,8 @@ class ChatDisplay(RichLog):
     def _render_user(self, content: str) -> None:
         panel = Panel(
             Markdown(content),
-            title="[bold accent]You[/bold accent]",
-            border_style="accent",
+            title="[bold yellow]You[/bold yellow]",
+            border_style="yellow",
             padding=(0, 1),
         )
         self.write(panel)
@@ -79,14 +79,14 @@ class ChatDisplay(RichLog):
     def _render_assistant(self, content: str) -> None:
         panel = Panel(
             Markdown(content),
-            title="[bold primary]Assistant[/bold primary]",
-            border_style="primary",
+            title="[bold cyan]Assistant[/bold cyan]",
+            border_style="cyan",
             padding=(0, 1),
         )
         self.write(panel)
 
     def _render_tool(self, msg: ChatMessage) -> None:
-        header = f"[bold secondary]🔧 Tool: {msg.tool_name or 'unknown'}[/bold secondary]"
+        header = f"[bold dim white]🔧 Tool: {msg.tool_name or 'unknown'}[/bold dim white]"
 
         parts: list[Any] = [header]
         if msg.tool_input:
@@ -104,7 +104,7 @@ class ChatDisplay(RichLog):
 
         panel = Panel(
             _rich_group(*parts),
-            border_style="secondary",
+            border_style="dim white",
             padding=(0, 1),
         )
         self.write(panel)
@@ -117,7 +117,7 @@ class ChatDisplay(RichLog):
     def begin_stream(self) -> None:
         """Start a new streaming assistant message."""
         self._stream_buffer = ""
-        self.write(Text("🤖 ", style="primary"), end="")
+        self.write(Text("🤖 ", style="cyan"), end="")
 
     def append_stream(self, chunk: str) -> None:
         """Append a chunk to the current streaming message."""

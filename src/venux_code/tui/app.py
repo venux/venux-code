@@ -82,22 +82,13 @@ class VenuxTUI(App[None]):
 
     # ---- compose ---------------------------------------------------------
 
-    def compose(self) -> ComposeResult:
-        theme = get_theme(self._theme_name)
-        self.theme = theme
-
-        yield Header()
-        with Horizontal(id="main-container"):
-            yield SessionSidebar(on_select=self._on_session_select)
-            with Vertical(id="chat-area"):
-                yield Static("", id="thinking-indicator")
-                yield ChatDisplay(id="chat-display")
-                yield ChatInput(on_submit=self._on_user_submit, id="chat-input")
-        yield StatusBar(id="status-bar")
-        yield Footer()
-
     def on_mount(self) -> None:
-        """Initialise status bar from config."""
+        """Register custom themes and initialise status bar."""
+        from venux_code.tui.themes import DARK, LIGHT, CATPPUCCIN_MOCHA
+        for t in (DARK, LIGHT, CATPPUCCIN_MOCHA):
+            self.register_theme(t)
+        self.theme = self._theme_name
+
         status = self.query_one("#status-bar", StatusBar)
         if self._config:
             status.update_model(getattr(self._config, "model", "—"))
@@ -109,6 +100,18 @@ class VenuxTUI(App[None]):
 
         # Set thinking indicator
         self._update_thinking_indicator()
+
+    def compose(self) -> ComposeResult:
+
+        yield Header()
+        with Horizontal(id="main-container"):
+            yield SessionSidebar(on_select=self._on_session_select)
+            with Vertical(id="chat-area"):
+                yield Static("", id="thinking-indicator")
+                yield ChatDisplay(id="chat-display")
+                yield ChatInput(on_submit=self._on_user_submit, id="chat-input")
+        yield StatusBar(id="status-bar")
+        yield Footer()
 
     # ---- reactive watchers -----------------------------------------------
 

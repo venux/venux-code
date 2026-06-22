@@ -28,16 +28,16 @@ class StatusBar(Static):
 
     def render(self) -> Text:
         parts = Text()
-        parts.append(" ⚡ ", style="bold accent")
-        parts.append(f"Model: {self.model}", style="secondary")
+        parts.append(" ⚡ ", style="bold yellow")
+        parts.append(f"Model: {self.model}", style="dim white")
         parts.append("  │  ", style="dim")
-        parts.append(f"Session: {self.session_id[:12]}", style="secondary")
+        parts.append(f"Session: {self.session_id[:12]}", style="dim white")
         parts.append("  │  ", style="dim")
-        parts.append(f"Tokens: {self.tokens_used:,}", style="success")
+        parts.append(f"Tokens: {self.tokens_used:,}", style="green")
         parts.append("  │  ", style="dim")
-        parts.append(f"Cost: ${self.cost:.4f}", style="warning")
+        parts.append(f"Cost: ${self.cost:.4f}", style="yellow")
         parts.append("  │  ", style="dim")
-        parts.append(self.status_text, style="primary")
+        parts.append(self.status_text, style="cyan")
         return parts
 
     # Convenience mutators -------------------------------------------------

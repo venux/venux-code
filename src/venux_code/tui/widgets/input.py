@@ -27,7 +27,7 @@ class ChatInput(Static):
         height: auto;
         min-height: 3;
         max-height: 8;
-        background: $input-background;
+        background: $surface;
     }
     ChatInput .input-hints {
         height: 1;
@@ -70,8 +70,8 @@ class ChatInput(Static):
         textarea.placeholder = self._placeholder
         textarea.watch(self, "text", self._on_text_changed)
 
-    def _on_text_changed(self, new_value: str) -> None:
-        self.can_send = bool(new_value.strip())
+    def _on_text_changed(self, new_value: str | None) -> None:
+        self.can_send = bool(new_value and new_value.strip())
 
     def action_send(self) -> None:
         textarea = self.query_one("#chat-textarea", TextArea)
